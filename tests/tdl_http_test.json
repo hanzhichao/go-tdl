@@ -1,0 +1,17 @@
+{
+  "name": "test_api_demo",
+  "description": "test description",
+  "priority": 1,
+  "tags": ["http", "api-test"],
+  "setups": [
+    {"method": "Http.Get", "args": {"url": "/get","params":  {"a": 1, "b": 2, "c": 3}}}
+  ],
+  "teardowns": [
+    {"method": "Http.Get", "args": {"url": "/get","params":  {"a": 1, "b": 2, "c": 3}}}
+  ],
+  "steps": [
+    {"method": "Http.Get", "args": {"url": "/get","params":  {"a": 1, "b": 2, "c": 3}}},
+    {"method": "Http.Post", "args": {"url": "/post", "json":  {"name": "Kevin"}}},
+    {"method": "Http.Get", "args": {"url": "/get", "params":  {"a": 1, "b": 2, "c": 3}}}
+  ]
+}
