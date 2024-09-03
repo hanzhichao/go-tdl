@@ -1,5 +1,7 @@
 package go_tdl
 
+import "fmt"
+
 type TestCaseId string
 
 type TestCase struct {
@@ -14,12 +16,15 @@ type TestCase struct {
 }
 
 func (testcase *TestCase) Run(env *Env) {
+	fmt.Printf("执行测试用例: %s\n", testcase.Name)
 	for _, step := range testcase.Setups {
 		step.Run(env)
 	}
 
-	for _, step := range testcase.Steps {
+	for index, step := range testcase.Steps {
+		fmt.Printf("执行: 步骤%d\n", index+1)
 		step.Run(env)
+
 	}
 	// TODO register result
 

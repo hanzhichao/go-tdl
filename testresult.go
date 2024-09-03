@@ -29,6 +29,8 @@ type TestCaseResult struct {
 	TestCaseId          TestCaseId `json:"testcase_id"`
 	TestCaseName        string     `json:"testcase_name"`
 	TestCaseDescription string     `json:"testcase_description"`
+	TestCasePriority    int        `json:"testcase_priority"`
+	TestCaseTags        []string   `json:"testcase_tags"`
 
 	StartTime string `json:"start_time"`
 	EndTime   string `json:"end_time"`

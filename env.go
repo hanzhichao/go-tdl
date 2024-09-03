@@ -1,9 +1,5 @@
 package go_tdl
 
-import (
-	"fmt"
-)
-
 type EnvId string
 
 type Env struct {
@@ -11,26 +7,31 @@ type Env struct {
 	Name        string                 `json:"name"`
 	Description string                 `json:"description"`
 	Info        map[string]string      `json:"info"`
-	Libraries   map[string]interface{} `json:"libraries"`
+	Libraries   map[string]Library     `json:"libraries"`
 	Config      map[string][]byte      `json:"config"`
-	Variables   map[string][]byte      `json:"variables"`
+	Variables   map[string]interface{} `json:"variables"`
 }
 
-func (env *Env) GetVariable(key string) []byte {
+func NewEnv(libraries map[string]Library, variables map[string]interface{}) *Env {
+	if variables == nil {
+		variables = make(map[string]interface{})
+	}
+	return &Env{Libraries: libraries, Variables: variables}
+}
+
+func (env *Env) GetVariable(key string) interface{} {
 	return env.Variables[key]
 }
 
-func (env *Env) SetVariable(key string, value []byte) {
+func (env *Env) SetVariable(key string, value interface{}) {
 	env.Variables[key] = value
 }
 
 func (env *Env) InvokeMethod(library, method string, args map[string]interface{}) []byte {
 	libraryObj := env.Libraries[library]
-	fmt.Println(libraryObj)
-	//return libraryObj.Invoke(method, args)
-	return nil
+	return libraryObj.Invoke(method, args)
 }
 
-func (env *Env) RegisterLibrary(library string, libraryObj interface{}) {
+func (env *Env) RegisterLibrary(library string, libraryObj Library) {
 	env.Libraries[library] = libraryObj
 }
